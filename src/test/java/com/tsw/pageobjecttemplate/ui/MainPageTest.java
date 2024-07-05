@@ -2,7 +2,9 @@ package com.tsw.pageobjecttemplate.ui;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.commands.PressEnter;
 import com.tsw.pageobjecttemplate.pages.MainPage;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.chrome.ChromeOptions;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
@@ -27,33 +29,61 @@ public class MainPageTest {
     public void setUp() {
         // Fix the issue https://github.com/SeleniumHQ/selenium/issues/11750
         Configuration.browserCapabilities = new ChromeOptions().addArguments("--remote-allow-origins=*");
-        open("https://www.jetbrains.com/");
+        open("https://todomvc.com/examples/react/dist/#/");
     }
 
     @Test
-    public void search() {
-        mainPage.searchButton.click();
-
-        $("[data-test='search-input']").sendKeys("Selenium");
-        $("button[data-test='full-search-button']").click();
-
-        $("input[data-test='search-input']").shouldHave(attribute("value", "Selenium"));
+    public void userToCreateNewToDoActionThenThisActionIsShownOnTheList() {
+        mainPage.inputField.click();
+        mainPage.inputField.setValue("Wake up");
+        mainPage.inputField.pressEnter();
+        mainPage.itemCreated.shouldBe(visible);
     }
 
     @Test
-    public void toolsMenu() {
-        mainPage.toolsMenu.click();
+    public void userIsAbleToCreateMultipleActionsAndThenTheActionsAreListedAllTogether() {
 
-        $("div[data-test='main-submenu']").shouldBe(visible);
+        String todoFirstItem = "1.Make a cup of coffee";
+        String todoSecondItem = "2.Do some exersise";
+        //String locaterTemplate = label[@data-testid='todo-item-label' and contains(text(), '1.Make a cup of coffee')]
+        //To build unic locator
+        //To build second locator
+        //Assert that those locater are presented - so they are unic
+        mainPage.inputField.click();
+        mainPage.inputField.setValue("1.Make a cup of coffee");
+        mainPage.inputField.pressEnter();
+        mainPage.inputField.setValue("2.Do some exersise");
+        mainPage.inputField.pressEnter();
+        mainPage.itemCreated.shouldBe(visible);
+    }
+
+    //Homework 19
+
+    @Test
+    public void userIsAbleToMarkTheActionsAsCompleted() {
+        mainPage.inputField.click();
+        Selenide.sleep(1000);
+        mainPage.inputField.setValue("1.Make a cup of coffee");
+        Selenide.sleep(1000);
+        mainPage.inputField.pressEnter();
+        Selenide.sleep(1000);
+        mainPage.itemComplete.click();
+        Selenide.sleep(1000);
     }
 
     @Test
-    public void navigationToAllTools() {
-        mainPage.seeDeveloperToolsButton.click();
-        mainPage.findYourToolsButton.click();
-
-        $("#products-page").shouldBe(visible);
-
-        assertEquals("All Developer Tools and Products by JetBrains", Selenide.title());
+    public void userIsAbleToClickClearCompletedButton() {
+        mainPage.inputField.click();
+        Selenide.sleep(1000);
+        mainPage.inputField.setValue("2.Do some exercises");
+        Selenide.sleep(1000);
+        mainPage.inputField.pressEnter();
+        Selenide.sleep(1000);
+        mainPage.itemComplete.click();
+        Selenide.sleep(1000);
+       // mainPage.clearCompletedButton.click();
+       // Selenide.sleep(1000);
+        mainPage.popupCross.click();
+        Selenide.sleep(1000);
     }
 }
