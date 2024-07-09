@@ -19,8 +19,7 @@ public class MainPage {
     public SelenideElement itemComplete = $("[data-testid='todo-item-toggle']");
     public SelenideElement popupCross = $("[data-testid='todo-item-button']");
 
-    //public SelenideElement clearCompletedButton = $("[data-testid='footer-navigation']//svg[contains(@class,'clear-completed')]");
-    //public SelenideElement clearCompletedButton = $("[data-class='clear-completed']");
+    public SelenideElement clearCompletedButton = $(By.className("clear-completed"));
     }
 
 

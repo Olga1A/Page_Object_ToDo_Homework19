@@ -62,28 +62,22 @@ public class MainPageTest {
     @Test
     public void userIsAbleToMarkTheActionsAsCompleted() {
         mainPage.inputField.click();
-        Selenide.sleep(1000);
         mainPage.inputField.setValue("1.Make a cup of coffee");
-        Selenide.sleep(1000);
         mainPage.inputField.pressEnter();
-        Selenide.sleep(1000);
         mainPage.itemComplete.click();
-        Selenide.sleep(1000);
+        mainPage.inputField.click();
+        mainPage.inputField.setValue("2.Go for run");
+        mainPage.inputField.pressEnter();
     }
 
     @Test
     public void userIsAbleToClickClearCompletedButton() {
         mainPage.inputField.click();
-        Selenide.sleep(1000);
-        mainPage.inputField.setValue("2.Do some exercises");
-        Selenide.sleep(1000);
+        mainPage.inputField.setValue("1.Have a cold shower");
         mainPage.inputField.pressEnter();
-        Selenide.sleep(1000);
+        mainPage.inputField.setValue("2.Do some exercises");
+        mainPage.inputField.pressEnter();
         mainPage.itemComplete.click();
-        Selenide.sleep(1000);
-       // mainPage.clearCompletedButton.click();
-       // Selenide.sleep(1000);
-        mainPage.popupCross.click();
-        Selenide.sleep(1000);
+        mainPage.clearCompletedButton.click();
     }
 }
